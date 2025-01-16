@@ -1,1 +1,1 @@
-echo "Python/venv/" >> .gitignore
+echo ""C:\Users\Brenda\Desktop\PROJS\2025 Projects\my portfolio projects\Python\venv"" >> .gitignore

@@ -1,2 +1,3 @@
 A list of the requirements packages
 ipykernel - to run Jupyter notebooks
+numpy - used to run array calcs

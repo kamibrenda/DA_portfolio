@@ -66,3 +66,10 @@ print(filtered_ages)
 check_people = list(filter(lambda people: people["age"] > 22, people))
 print(check_people)
 
+
+# In[1]:
+
+
+## converted this file into .py from ipynb
+#jupyter nbconvert --to script filter.ipynb
+

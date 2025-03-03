@@ -32,8 +32,11 @@ FROM employee_demographics
 WHERE (first_name = 'Leslie' AND age = 44)
 		OR age > 55;
         
--- LIKE st
--- %(any value) and _ (specific value)
+-- LIKE can work with num 
 SELECT *
 FROM employee_demographics
-WHERE first_name LIKE 'Jer'  -- get the exact match
+WHERE first_name LIKE 'a%';  -- get the exact match
+
+SELECT *
+FROM employee_demographics
+WHERE birth_date LIKE '1989%'

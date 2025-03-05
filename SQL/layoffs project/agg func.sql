@@ -19,4 +19,4 @@ order by first_name desc;  -- default in ascending
 
 SELECT *
 FROM employee_demographics
-ORDER BY gender, age;
+ORDER BY gender, age desc;

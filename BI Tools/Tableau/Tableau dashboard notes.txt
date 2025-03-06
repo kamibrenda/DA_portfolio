@@ -1,0 +1,21 @@
+Tableau dashboard notes
+
+Continuous vs discrete
+
+Continuous - Unbroken without interruption
+ - Are green in color 
+ - has values that can be aggregated 
+	-produces axis
+
+Discrete - individually separate and distinct 
+ - Are green in color 
+ - has values that aren't numbers
+
+dimensions vs measures
+
+Dimensions- group or segment the data
+- has qualitative values 
+- affects the level of details
+
+Measures - are aggregated
+ - has quantitative values

@@ -19,6 +19,4 @@ HAVING avg(salary)> 75000;   -- filter at agg level
 
 
 
-
--- where 
  

@@ -1,0 +1,10 @@
+Tableau filters - used to narrow down filters 
+
+Order of operations 
+- Extract filters 
+- Data source filters
+- Context filters
+- Dimension filters
+- Measure filters
+- Table calculation filters
+

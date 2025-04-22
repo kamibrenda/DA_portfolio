@@ -1,0 +1,32 @@
+Tableau notes
+- Dimensions and Measures are 2 different roles
+- Dimensions are text datatypes plus are independent variables as shows the region units were sold and measures numeric datatypes by default also dependent variables as its grouped by region
+- Dashboard is a combo of stories
+- Creation of a calculated field being total sales = [Units]*[Unit Price]
+- To save the presentation to export as image or use the copy image 
+- Can download the visuals under the Tableau public profile: Kirill Eremenko
+- More dimensions increase granularity of the visualisation - per month for each gender
+- Types of aggregation - sum, mean, median, variance
+- Data discovery in Tableau can be done by utilising the highlight features for the charts
+- Joining of the data sources at the physical layer
+- Creating relalationships for the data sources at logical layer
+- Highlighting vs Filtering
+- Highlighting - dataset is not filtered but everything is present and relevant data is highlighted
+- Filtering - filters the dataset thus allows one deconstruct the scatterplot
+- Blending data vs Joining data
+- Blending data - when data sources are different and level of granularity defers
+- Joining data - when the relationships exists in the tables to show commonality
+- Parameters can substitute bins 
+-
+-
+-
+
+EOD
+Progress on the one thing I wanted to improve today:
+I've been able to spend less time in taking notes, and more time in learning.
+Accomplishments:
+Learnt how to use bamboo to create builds and automation.
+Most valuable learning:
+Using jira to handle assigned tasks.
+Improvement of Tomorrow:
+Requesting for help early enough when stuck.

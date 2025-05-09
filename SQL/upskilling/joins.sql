@@ -82,6 +82,7 @@ FROM	happiness_scores hs   -- left most table to serve as the query base - groun
 -- 5. Self joins  -- joining a table by itself 
 -- either by combining a table with itself based on a matching column 
 -- filter on the resulting rows based on some criteria 
+
 CREATE TABLE IF NOT EXISTS employees (
     employee_id INT PRIMARY KEY,
     employee_name VARCHAR(100),
@@ -98,21 +99,31 @@ INSERT INTO employees (employee_id, employee_name, salary, manager_id) VALUES
 SELECT * FROM employees;
 
 -- Employees with the same salary
-SELECT	e1.employee_id, e1.employee_name, e1.salary,
-		e2.employee_id, e2.employee_name, e2.salary
+SELECT	e1.employee_id, 
+	    e1.employee_name, 
+        e1.salary,
+		e2.employee_id, 
+        e2.employee_name, 
+        e2.salary
 FROM	employees e1 INNER JOIN employees e2
 		ON e1.salary = e2.salary
 WHERE	e1.employee_id > e2.employee_id;
 
 -- Employees that have a greater salary
-SELECT	e1.employee_id, e1.employee_name, e1.salary, 
-		e2.employee_id, e2.employee_name, e2.salary
+SELECT	e1.employee_id, 
+		e1.employee_name, 
+        e1.salary, 
+		e2.employee_id, 
+        e2.employee_name, 
+        e2.salary
 FROM	employees e1 INNER JOIN employees e2
 		ON e1.salary > e2.salary
 ORDER BY e1.employee_id;
 
 -- Employees and their managers
-SELECT	e1.employee_id, e1.employee_name, e1.manager_id,
+SELECT	e1.employee_id, 
+		e1.employee_name, 
+        e1.manager_id,
 		e2.employee_name AS manager_name
 FROM	employees e1 LEFT JOIN employees e2
 		ON e1.manager_id = e2.employee_id;

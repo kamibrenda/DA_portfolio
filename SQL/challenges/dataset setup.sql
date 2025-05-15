@@ -1,15 +1,17 @@
+DROP SCHEMA IF EXISTS dannys_diner;
 CREATE SCHEMA dannys_diner;
+USE dannys_diner;
 -- ET search_path = dannys_diner;
 
 
 CREATE TABLE sales (
-  "customer_id" VARCHAR(1),
-  "order_date" DATE,
-  "product_id" INTEGER
+  customer_id VARCHAR(1),
+  order_date DATE,
+  product_id INTEGER
 );
 
 INSERT INTO sales
-  ("customer_id", "order_date", "product_id")
+  (customer_id, order_date, product_id)
 VALUES
   ('A', '2021-01-01', '1'),
   ('A', '2021-01-01', '2'),
@@ -29,13 +31,13 @@ VALUES
  
 
 CREATE TABLE menu (
-  "product_id" INTEGER,
-  "product_name" VARCHAR(5),
-  "price" INTEGER
+  product_id INTEGER,
+  product_name VARCHAR(5),
+  price INTEGER
 );
 
 INSERT INTO menu
-  ("product_id", "product_name", "price")
+  (product_id, product_name, price)
 VALUES
   ('1', 'sushi', '10'),
   ('2', 'curry', '15'),
@@ -43,12 +45,12 @@ VALUES
   
 
 CREATE TABLE members (
-  "customer_id" VARCHAR(1),
-  "join_date" DATE
+  customer_id VARCHAR(1),
+  join_date DATE
 );
 
 INSERT INTO members
-  ("customer_id", "join_date")
+  (customer_id, join_date)
 VALUES
   ('A', '2021-01-07'),
   ('B', '2021-01-09');

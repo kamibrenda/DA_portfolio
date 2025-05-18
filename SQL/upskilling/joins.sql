@@ -179,8 +179,10 @@ WHERE	ABS(p1.unit_price - p2.unit_price) < 0.25
 ORDER BY price_diff DESC;
         
 -- Rewritten with a CROSS JOIN
-SELECT	p1.product_name, p1.unit_price,
-		p2.product_name, p2.unit_price,
+SELECT	p1.product_name, 
+	p1.unit_price,
+		p2.product_name, 
+        p2.unit_price,
         p1.unit_price - p2.unit_price AS price_diff
 FROM	products p1 CROSS JOIN products p2
 WHERE	ABS(p1.unit_price - p2.unit_price) < 0.25
@@ -205,6 +207,11 @@ SELECT * FROM outerwear;
 SELECT * FROM happiness_scores;
 SELECT * FROM happiness_scores_current;
 
-SELECT year, country, happiness_score FROM happiness_scores
+SELECT year, country, 
+	happiness_score 
+FROM happiness_scores
 UNION ALL
-SELECT 2024, country, ladder_score FROM happiness_scores_current;
+SELECT 2024, -- the happiness_scores_current only has 2024 data 
+	country, 
+    ladder_score 
+FROM happiness_scores_current;

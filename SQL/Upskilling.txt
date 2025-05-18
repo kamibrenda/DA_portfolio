@@ -1,0 +1,10 @@
+Upskilling 
+Write 5 analytical/business questions about the dataset.
+1. Does joining the loyalty program influence customer purchase frequency or total sales? 
+2. What factors contribute to sushi being the least popular item on the menu? 
+3. Is the most frequent customer enrolled in the loyalty program, and how does their behavior compare to others? 
+4. How do average sales per customer differ before and after joining the loyalty program? 
+5. What percentage of total customers is enrolled in the loyalty program, and how does this affect overall revenue? 
+6. Is there a correlation between points earned and customer spending over time? 
+7. How can the loyalty program be optimized for long-term customer retention? 
+

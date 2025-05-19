@@ -13,7 +13,7 @@ select*
 from 
 	sales;
     
-SELECT
+SELECT  -- B
   s.customer_id,
   SUM(me.price) AS total_amount_spent
 FROM sales s
@@ -21,17 +21,22 @@ JOIN menu me ON s.product_id = me.product_id
 GROUP BY s.customer_id
 ORDER BY s.customer_id;
 
+SELECT sal.customer_id, sum(men.price) over (partition by sal.customer_id) as Total  -- C
+FROM dannys_diner.sales sal
+INNER JOIN dannys_diner.menu men 
+ON sal.product_id = men.product_id ;
+
+
 
 -- 2. How many days has each customer visited the restaurant?
 select 
 	s.customer_id,
-    COUNT(order_date) as no_days
+    COUNT(DISTINCT order_date) as no_days  -- TO ELIMINATE DAYS GONE TWICE
 from sales s
 GROUP BY s.customer_id
 ;
 
 -- 3. What was the first item from the menu purchased by each customer?
-
 select 
 distinct s.customer_id,
 me.product_name, 
@@ -41,8 +46,19 @@ menu me
 JOIN sales s ON me.product_id = s.product_id 
 WHERE order_date = (select MIN(order_date)
 		from sales)
-GROUP BY s.customer_id
 ;
+-- 3. What was the first item from the menu purchased by each customer?
+SELECT customer_id, order_date, product_name  -- Alt version of code 
+FROM (
+    SELECT DISTINCT
+        s.customer_id,
+        s.order_date,
+        m.product_name,
+        DENSE_RANK() OVER (PARTITION BY s.customer_id ORDER BY s.order_date) AS rn  
+    FROM sales s
+    JOIN menu m ON s.product_id = m.product_id
+) AS ranks
+WHERE rn = 1;
 
 -- 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
 select 

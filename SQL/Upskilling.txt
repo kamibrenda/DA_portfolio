@@ -1,5 +1,5 @@
 Upskilling 
-Write 5 analytical/business questions about the dataset.
+Write 5 analytical/business questions about the dataset. - Danny's Diner 
 1. Does joining the loyalty program influence customer purchase frequency or total sales? 
 2. What factors contribute to sushi being the least popular item on the menu? 
 3. Is the most frequent customer enrolled in the loyalty program, and how does their behavior compare to others? 
@@ -8,3 +8,11 @@ Write 5 analytical/business questions about the dataset.
 6. Is there a correlation between points earned and customer spending over time? 
 7. How can the loyalty program be optimized for long-term customer retention? 
 
+Draft 5 business-driven analytical questions - Pizza Runner 
+1. Can linking the pizza_toppings and pizza_recipes tables with topping_id provide deeper insights into customer topping preferences and inform future menu decisions?
+2. Would adding a delivery timestamp field in the database help accurately track the time runners take during the delivery lifecycle?
+3. Would capturing the exact cancellation timestamp and identifying whether it originated from the restaurant or customer, enable better categorization and analysis of cancellation patterns? 
+4. Could the analysis identify frequent cancellation sources and the reasons behind them?
+5. Is there a correlation between delivery distance and cancellation rates? If so, would understanding this relationship help optimize delivery zones or improve runner logistics?
+6. What is the most frequently ordered pizza, and do extras or exclusions significantly influence its popularity?
+7. How might implementing a runner rating system enhance customer satisfaction and retention, ultimately contributing to increased profitability?

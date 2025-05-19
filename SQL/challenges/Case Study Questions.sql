@@ -1,5 +1,5 @@
 -- Case Study Questions
-
+USE dannys_diner;
 -- 1. What is the total amount each customer spent at the restaurant?
 select*
 from 
@@ -55,23 +55,38 @@ GROUP BY me.product_name, s.product_id
 ;
 
 -- 5. Which item was the most popular for each customer?
-WITH product_counts AS (
-  SELECT 
-    c.customer_id,
-    me.product_name,
-    COUNT(*) AS purchase_count,
-    RANK() OVER (PARTITION BY c.customer_id ORDER BY COUNT(*) DESC) AS rank
-  FROM sales s
-  JOIN menu me ON s.product_id = me.product_id 
-  JOIN customer c ON s.customer_id = c.customer_id
-  GROUP BY c.customer_id, me.product_name
-)
-SELECT customer_id, product_name, purchase_count
-FROM product_counts
-WHERE rank = 1;
+select count(s.product_id)
+from sales s;
 
+select 
+	me.product_name,
+    COUNT(s.product_id) AS popular_item
+from menu me INNER JOIN sales s
+ON me.product_id = s.product_id
+GROUP BY me.product_name
+ORDER BY popular_item desc
+limit 1
+;
 
--- 6. Which item was purchased first by the customer after they became a member?
+-- 6. Which item was purchased first by the customer after they became a member?  TBD
+select *
+FROM
+(SELECT m.customer_id
+	from members m INNER JOIN sales s 
+	ON m.customer_id = s.customer_id) as customer_
+LEFT JOIN  (select me.product_name
+			from menu me INNER JOIN sales s
+			ON me.product_id = s.product_id) AS product_
+ON customer_.product_id = product_.product_id
+WHERE customer_.order_date > customer_.join_date
+;
+
+select 
+me.product_name
+from menu me INNER JOIN sales s
+ON me.product_id = s.product_id
+;
+
 
 -- 7. Which item was purchased just before the customer became a member?
 

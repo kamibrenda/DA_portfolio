@@ -1,4 +1,6 @@
--- 7. CTEs: Readability
+-- 7. CTEs: Readability to compare CTEs with subqueries
+-- Connect to database (MySQL)
+USE maven_advanced_sql;
 
 /* SUBQUERY: Return the happiness scores along with
    the average happiness score for each country */
@@ -25,29 +27,38 @@ FROM	happiness_scores hs LEFT JOIN country_hs
 -- 8. CTEs: Reusability
         
 -- SUBQUERY: Compare the happiness scores within each region in 2023
-SELECT * FROM happiness_scores WHERE year = 2023;
+SELECT * FROM happiness_scores WHERE year = 2023;  -- table 1 for subquery 
 
-SELECT	hs1.region, hs1.country, hs1.happiness_score,
-		hs2.country, hs2.happiness_score
+SELECT	hs1.region, 	 -- table 2 for subquery 
+		hs1.country, 
+        hs1.happiness_score,
+		hs2.country, 
+        hs2.happiness_score
 FROM	happiness_scores hs1 INNER JOIN happiness_scores hs2
 		ON hs1.region = hs2.region;
         
-SELECT	hs1.region, hs1.country, hs1.happiness_score,
-		hs2.country, hs2.happiness_score
+SELECT	hs1.region, 
+		hs1.country, 
+        hs1.happiness_score,
+		hs2.country, 
+        hs2.happiness_score
 FROM	(SELECT * FROM happiness_scores WHERE year = 2023) hs1
 		INNER JOIN
-        (SELECT * FROM happiness_scores WHERE year = 2023) hs2
-		ON hs1.region = hs2.region;
+        (SELECT * FROM happiness_scores WHERE year = 2023) hs2  -- same table joined to itself 
+		ON hs1.region = hs2.region;  
 
 -- CTE: Compare the happiness scores within each region in 2023
 WITH hs AS (SELECT * FROM happiness_scores WHERE year = 2023)
 
-SELECT	hs1.region, hs1.country, hs1.happiness_score,
-		hs2.country, hs2.happiness_score
+SELECT	hs1.region, 
+		hs1.country, 
+        hs1.happiness_score,
+		hs2.country, 
+        hs2.happiness_score
 FROM	hs hs1 INNER JOIN hs hs2
 		ON hs1.region = hs2.region
-WHERE	hs1.country < hs2.country;
-
+WHERE	hs1.country < hs2.country;   -- to get countries that are in the next order of the alphabet
+											-- between the two similar tables 
 -- 9. Multiple CTEs
 
 -- Step 1: Compare 2023 vs 2024 happiness scores side by side

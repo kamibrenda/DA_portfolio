@@ -47,7 +47,7 @@ JOIN sales s ON me.product_id = s.product_id
 WHERE order_date = (select MIN(order_date)
 		from sales)
 ;
--- 3. What was the first item from the menu purchased by each customer?
+
 SELECT customer_id, order_date, product_name  -- Alt version of code 
 FROM (
     SELECT DISTINCT
@@ -63,26 +63,50 @@ WHERE rn = 1;
 -- 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
 select 
 me.product_name,
-COUNT(s.product_id)
+COUNT(s.product_id) AS item_purch
 from 
 sales s 
 JOIN menu me ON s.product_id = me.product_id 
 GROUP BY me.product_name, s.product_id
+ORDER BY item_purch DESC
+LIMIT 1
 ;
 
 -- 5. Which item was the most popular for each customer?
-select count(s.product_id)
-from sales s;
-
-select 
-	me.product_name,
-    COUNT(s.product_id) AS popular_item
-from menu me INNER JOIN sales s
-ON me.product_id = s.product_id
-GROUP BY me.product_name
-ORDER BY popular_item desc
-limit 1
+select me.product_name,
+		customer.customer_id
+from menu me INNER JOIN
+	(SELECT s.product_id,
+		    s.customer_id
+        from sales s
+       GROUP BY s.product_id, s.customer_id) AS customer
+ON me.product_id = customer.product_id
+order by customer.customer_id
 ;
+
+-- Esther's query 
+WITH customer_product_counts AS (
+    SELECT
+        m.product_name,
+        s.customer_id,
+        COUNT(customer_id) AS counts
+    FROM sales s
+    JOIN menu m ON s.product_id = m.product_id
+    GROUP BY m.product_name, s.customer_id
+),
+max_counts AS (
+    SELECT
+        customer_id,
+        MAX(counts) AS max_count
+    FROM customer_product_counts
+    GROUP BY customer_id
+)
+SELECT
+    cpc.product_name,
+    cpc.customer_id
+FROM customer_product_counts cpc
+JOIN max_counts mc ON cpc.customer_id = mc.customer_id AND cpc.counts = mc.max_count
+ORDER BY cpc.customer_id; 
 
 -- 6. Which item was purchased first by the customer after they became a member?  TBD
 select *

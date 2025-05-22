@@ -108,6 +108,34 @@ FROM customer_product_counts cpc
 JOIN max_counts mc ON cpc.customer_id = mc.customer_id AND cpc.counts = mc.max_count
 ORDER BY cpc.customer_id; 
 
+
+-- chatgpt ver
+WITH product_counts AS (
+  SELECT 
+    s.customer_id,
+    m.product_name,
+    COUNT(*) AS purchase_count
+  FROM dannys_diner.sales s
+  JOIN dannys_diner.menu m 
+    ON s.product_id = m.product_id
+  GROUP BY s.customer_id, m.product_name
+),
+ranked_items AS (
+  SELECT 
+    *,
+    RANK() OVER (
+      PARTITION BY customer_id 
+      ORDER BY purchase_count DESC
+    ) AS rank_
+  FROM product_counts
+)
+SELECT 
+  customer_id,
+  product_name AS most_popular_item,
+  purchase_count
+FROM ranked_items
+WHERE rank_ = 1;
+
 -- 6. Which item was purchased first by the customer after they became a member?  TBD
 select *
 FROM
@@ -121,11 +149,30 @@ ON customer_.product_id = product_.product_id
 WHERE customer_.order_date > customer_.join_date
 ;
 
-select 
-me.product_name
-from menu me INNER JOIN sales s
-ON me.product_id = s.product_id
-;
+
+-- chatgpt
+WITH joined_data AS (
+  SELECT 
+    s.customer_id,
+    s.order_date,
+    s.product_id,
+    m.join_date
+  FROM dannys_diner.sales s
+  JOIN dannys_diner.members m ON s.customer_id = m.customer_id
+  WHERE s.order_date >= m.join_date
+),
+first_purchases AS (
+  SELECT 
+    jd.customer_id,
+    jd.order_date,
+    me.product_name,
+    ROW_NUMBER() OVER (PARTITION BY jd.customer_id ORDER BY jd.order_date) AS rn
+  FROM joined_data jd
+  JOIN dannys_diner.menu me ON jd.product_id = me.product_id
+)
+SELECT customer_id, order_date, product_name AS first_item_after_join
+FROM first_purchases
+WHERE rn = 1;
 
 
 -- 7. Which item was purchased just before the customer became a member?

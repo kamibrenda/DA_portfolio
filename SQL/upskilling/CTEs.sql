@@ -60,6 +60,8 @@ FROM	hs hs1 INNER JOIN hs hs2
 WHERE	hs1.country < hs2.country;   -- to get countries that are in the next order of the alphabet
 											-- between the two similar tables 
 -- 9. Multiple CTEs
+SELECT * FROM happiness_scores WHERE year = 2023;
+SELECT * FROM happiness_scores_current;
 
 -- Step 1: Compare 2023 vs 2024 happiness scores side by side
 WITH hs23 AS (SELECT * FROM happiness_scores WHERE year = 2023),
@@ -83,7 +85,7 @@ SELECT	hs23.country,
 FROM	hs23 LEFT JOIN hs24
 		ON hs23.country = hs24.country) AS hs_23_24
         
-WHERE hs_2024 > hs_2023;
+WHERE hs_2024 > hs_2023;			-- only return rows where hs 2024 is greater 
 
 -- Alternative: CTEs only
 WITH hs23 AS (SELECT * FROM happiness_scores WHERE year = 2023),
@@ -182,7 +184,6 @@ ORDER BY employee_id;
 
 -- Subquery
 SELECT * FROM
-
 (SELECT	year, country, happiness_score FROM happiness_scores
 UNION ALL
 SELECT	2024, country, ladder_score FROM happiness_scores_current) AS my_subquery;
@@ -200,7 +201,7 @@ SELECT	year, country, happiness_score FROM happiness_scores
 UNION ALL
 SELECT	2024, country, ladder_score FROM happiness_scores_current;
 
-SELECT * FROM my_temp_table;
+SELECT * FROM my_temp_table;  -- can be freely referenced throughout during session duration 
 
 -- View
 CREATE VIEW my_view AS
@@ -208,4 +209,4 @@ SELECT	year, country, happiness_score FROM happiness_scores
 UNION ALL
 SELECT	2024, country, ladder_score FROM happiness_scores_current;
 
-SELECT * FROM my_view;
+SELECT * FROM my_view;   -- exists in the views for access after the session 

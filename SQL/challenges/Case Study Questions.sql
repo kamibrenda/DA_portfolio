@@ -137,46 +137,57 @@ FROM ranked_items
 WHERE rank_ = 1;
 
 -- 6. Which item was purchased first by the customer after they became a member?  TBD
-select *
-FROM
-(SELECT m.customer_id
-	from members m INNER JOIN sales s 
-	ON m.customer_id = s.customer_id) as customer_
-LEFT JOIN  (select me.product_name
-			from menu me INNER JOIN sales s
-			ON me.product_id = s.product_id) AS product_
-ON customer_.product_id = product_.product_id
-WHERE customer_.order_date > customer_.join_date
-;
-
+SELECT s.customer_id, 
+	   s.order_date, 
+       me.product_name
+FROM sales s
+INNER JOIN members m ON s.customer_id = m.customer_id
+INNER JOIN menu me ON s.product_id = me.product_id
+WHERE s.order_date > m.join_date  -- compares current date to first purchase date to get the first row 
+AND s.order_date = (			
+    SELECT MIN(s2.order_date)   -- finds only minimum order date 
+    FROM sales s2
+    WHERE s2.customer_id = s.customer_id
+      AND s2.order_date > m.join_date  -- finds first purchase after membership date
+);
 
 -- chatgpt
-WITH joined_data AS (
-  SELECT 
-    s.customer_id,
-    s.order_date,
-    s.product_id,
-    m.join_date
-  FROM dannys_diner.sales s
-  JOIN dannys_diner.members m ON s.customer_id = m.customer_id
-  WHERE s.order_date >= m.join_date
-),
-first_purchases AS (
-  SELECT 
-    jd.customer_id,
-    jd.order_date,
-    me.product_name,
-    ROW_NUMBER() OVER (PARTITION BY jd.customer_id ORDER BY jd.order_date) AS rn
-  FROM joined_data jd
-  JOIN dannys_diner.menu me ON jd.product_id = me.product_id
-)
-SELECT customer_id, order_date, product_name AS first_item_after_join
-FROM first_purchases
+SELECT customer_id, 
+	   order_date, 
+	   product_name
+FROM (
+    SELECT 
+        s.customer_id,
+        s.order_date,
+        me.product_name,
+        m.join_date,
+        ROW_NUMBER() OVER (PARTITION BY s.customer_id ORDER BY s.order_date) AS rn  -- to 
+    FROM sales s
+    JOIN members m ON s.customer_id = m.customer_id
+    JOIN menu me ON s.product_id = me.product_id
+    WHERE s.order_date > m.join_date
+) ranked
 WHERE rn = 1;
 
 
 -- 7. Which item was purchased just before the customer became a member?
-
+select customer_id,
+	   product_name,
+       order_date
+from 
+(select s.customer_id,
+		me.product_name,
+        s.order_date,
+        m.join_date,
+        row_number() over(partition by s.customer_id order by s.order_date DESC ) as rn -- to get the last order date
+from sales s INNER JOIN members m
+ON s.customer_id = m.customer_id
+INNER JOIN menu me 
+ON me.product_id = s.product_id 
+where s.order_date > m.join_date
+)ranked_prods
+where rn = 1
+;
 -- 8. What is the total items and amount spent for each member before they became a member?
 
 -- 9.If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?

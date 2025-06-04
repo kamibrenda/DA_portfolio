@@ -65,6 +65,7 @@ SELECT
 FROM customer_orders co
 JOIN runner_orders ro 
   ON co.order_id = ro.order_id
-WHERE ro.cancellation IS NULL OR ro.cancellation = '';
+WHERE ro.cancellation IS NULL OR ro.cancellation = ''
+;
 
  

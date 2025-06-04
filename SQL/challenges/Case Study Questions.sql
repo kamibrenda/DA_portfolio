@@ -37,6 +37,7 @@ GROUP BY s.customer_id
 ;
 
 -- 3. What was the first item from the menu purchased by each customer?
+-- ver1 
 select 
 distinct s.customer_id,
 me.product_name, 
@@ -48,6 +49,7 @@ WHERE order_date = (select MIN(order_date)
 		from sales)
 ;
 
+-- ver2
 SELECT customer_id, order_date, product_name  -- Alt version of code 
 FROM (
     SELECT DISTINCT
@@ -188,8 +190,10 @@ where s.order_date > m.join_date
 )ranked_prods
 where rn = 1
 ;
+
 -- 8. What is the total items and amount spent for each member before they became a member?
 -- total spent by each customer
+-- still debugging 
 WITH amount_spent as (   -- CTE to get the amount spent and total items  
 	SELECT 
        s.customer_id,
@@ -211,7 +215,9 @@ ON m.customer_id = amount_spent.customer_id
 ;
 
 -- 9.If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
-
+--  TBD
 
 -- 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi 
 -- how many points do customer A and B have at the end of January?
+
+--  TBD

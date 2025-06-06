@@ -18,11 +18,12 @@ group by r.runner_id
 -- Is there any relationship between the number of pizzas and how long the order takes to prepare?
 SELECT
   co.order_id,
-  COUNT(co.pizza_id) AS no_pizzas,
-  TIMESTAMPDIFF(MINUTE, co.order_time, ro.pickup_time) AS time_taken_order
+  COUNT(co.pizza_id) AS no_pizzas,   -- get the number of pizzas 
+  TIMESTAMPDIFF(MINUTE, co.order_time, ro.pickup_time) AS time_taken_order  -- get the difference between the time the pizza is ordered and picked 
 FROM customer_orders co
 JOIN runner_orders ro ON co.order_id = ro.order_id
 GROUP BY co.order_id, co.order_time, ro.pickup_time
+ORDER BY time_taken_order DESC  -- Arrange pizzas from the one that took the most time 
 ;
 
 -- C. Ingredient Optimisation

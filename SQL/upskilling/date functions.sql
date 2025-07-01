@@ -1,3 +1,4 @@
+SELECT version();
 -- date functions 
 
 -- to get current date
@@ -24,5 +25,21 @@ SELECT TIMESTAMPDIFF(day, '2022-01-01', CURDATE());   -- day diff
 -- datename -  in sql - returns a specific part of a date 
 SELECT year (current_timestamp());  -- workbench req specification
 SELECT month ('2024-02-20');
+SELECT quarter (current_timestamp());
+select weekday(current_timestamp());
+
+-- datepart
+SELECT DATEPART(current_timestamp());
+
+SELECT EXTRACT(YEAR FROM current_date);   -- Returns the current year
+SELECT EXTRACT(MONTH FROM '2022-01-01') AS month_value;
+SELECT EXTRACT(DAY FROM '2022-01-01') AS day_value;
+
+-- EOMONTH 
+SELECT LAST_DAY(CURDATE()) AS end_of_month;
+
+-- dateadd - add date/time ti date vals
+SELECT DATE_ADD('2017-08-25', INTERVAL 2 MONTH) AS DateAdd;
+
 
 
